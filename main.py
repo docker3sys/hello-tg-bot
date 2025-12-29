@@ -15,7 +15,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 application.add_handler(CommandHandler("start", start))
 
-application.initialize()  # ⚠ обязательно!
+asyncio.run(application.initialize())  # ⚠ обязательно!
 
 # ===== Webhook =====
 @app.route("/webhook", methods=["POST"])
