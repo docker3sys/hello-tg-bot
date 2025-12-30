@@ -18,11 +18,18 @@ application.add_handler(CommandHandler("start", start))
 asyncio.run(application.initialize())  # ⚠ обязательно!
 
 # ===== Webhook =====
-@app.route("/webhook", methods=["POST"])
+# @app.route("/webhook", methods=["POST"])
+# def webhook():
+#     update = Update.de_json(request.get_json(force=True), application.bot)
+#     asyncio.run(application.process_update(update))
+#     return "ok"
+
+@app.route("/webhook", methods=["GET", "POST"])
 def webhook():
-    update = Update.de_json(request.get_json(force=True), application.bot)
-    asyncio.run(application.process_update(update))
-    return "ok"
+    if request.method == "POST":
+        update = Update.de_json(request.get_json(force=True), application.bot)
+        asyncio.run(application.process_update(update))
+    return "WEBHOOK OK"
 
 # ===== Проверка сервера =====
 @app.route("/", methods=["GET"])
